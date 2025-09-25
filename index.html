@@ -168,77 +168,92 @@
         }
 
         @keyframes clickBeatFade {
-            0% {
-                transform: translate(-50%, -50%) scale(0.5);
-                opacity: 1;
-            }
-            50% {
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 0.7;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 0;
-            }
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
         }
         
-        .promise-orb-container {
+        /* Redesigned "Our Promises" Section Styles */
+        .promise-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
             position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0.5rem;
+            overflow: hidden;
         }
-        @media (min-width: 768px) {
-            .promise-orb-container {
-                width: 150px;
-                height: 150px;
-                margin: 1rem;
-            }
+        .promise-card:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.2), transparent 50%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+            z-index: 0;
         }
-        .promise-orb {
+        .promise-card:hover:before {
+            transform: scale(2);
+        }
+        .promise-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(219, 39, 119, 0.1);
+        }
+        .promise-icon {
+            transition: transform 0.4s ease;
+        }
+        .promise-card:hover .promise-icon {
+            transform: scale(1.1);
+        }
+        .promise-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* New Flipping Card Styles for "Reasons I Love You" */
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .flip-card-inner {
+            position: relative;
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(251, 146, 222, 0.8) 0%, rgba(219, 39, 119, 0.8) 100%);
-            box-shadow: 0 0 20px #ec4899, 0 0 40px #d946ef;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+            border-radius: 1rem;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.5s ease;
-            animation: orb-glow 4s infinite alternate;
+            padding: 1rem;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
         }
-        @keyframes orb-glow {
-            from {
-                box-shadow: 0 0 10px #ec4899, 0 0 20px #d946ef;
-            }
-            to {
-                box-shadow: 0 0 30px #ec4899, 0 0 60px #d946ef;
-            }
+        .flip-card-front {
+            background-color: white;
         }
-        .promise-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            text-align: center;
-            color: white;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.25rem;
-            pointer-events: none;
-        }
-        @media (min-width: 768px) {
-            .promise-text {
-                font-size: 1.5rem;
-            }
-        }
-        .promise-orb-container:hover .promise-orb {
-            transform: scale(1.5);
-            opacity: 0.2;
-        }
-        .promise-orb-container:hover .promise-text {
-            opacity: 1;
+        .flip-card-back {
+            background-color: white;
+            transform: rotateY(180deg);
         }
     </style>
 </head>
@@ -259,60 +274,85 @@
 
     <main class="container mx-auto px-4 md:px-6 py-16 relative z-10">
 
-      
-        
-        <!-- New "Our Promises" Section -->
+        <!-- Redesigned "Our Promises" Section -->
         <section class="mb-20 reveal">
             <h2 class="text-3xl md:text-4xl font-playfair text-center font-bold mb-12 gradient-text">Our Promises</h2>
-            <div class="flex flex-col md:flex-row justify-center items-center">
-                <div class="promise-orb-container">
-                    <div class="promise-orb"></div>
-                    <div class="promise-text">To always listen</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="promise-card">
+                    <div class="promise-card-content">
+                        <div class="promise-icon mb-4">
+                            <svg class="w-16 h-16 mx-auto text-pink-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-playfair text-xl font-bold text-rose-800">To always listen</h3>
+                        <p class="mt-2 text-gray-600">With an open heart and without judgment.</p>
+                    </div>
                 </div>
-                <div class="promise-orb-container">
-                    <div class="promise-orb"></div>
-                    <div class="promise-text">To share every sunset</div>
+                <div class="promise-card">
+                    <div class="promise-card-content">
+                         <div class="promise-icon mb-4">
+                            <svg class="w-16 h-16 mx-auto text-fuchsia-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                               <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                            </svg>
+                         </div>
+                        <h3 class="font-playfair text-xl font-bold text-rose-800">To share every sunset</h3>
+                        <p class="mt-2 text-gray-600">And appreciate the beauty in our life together.</p>
+                    </div>
                 </div>
-                <div class="promise-orb-container">
-                    <div class="promise-orb"></div>
-                    <div class="promise-text">To never stop exploring</div>
+                <div class="promise-card">
+                    <div class="promise-card-content">
+                         <div class="promise-icon mb-4">
+                            <svg class="w-16 h-16 mx-auto text-purple-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                            </svg>
+                         </div>
+                        <h3 class="font-playfair text-xl font-bold text-rose-800">To never stop exploring</h3>
+                        <p class="mt-2 text-gray-600">The world, and each other, with wonder.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Reasons I Love You Section -->
+        <!-- Reasons I Love You Section with Flipping Cards -->
         <section class="mb-20 reveal">
             <h2 class="text-3xl md:text-4xl font-playfair text-center font-bold mb-12 gradient-text">Reasons I Love You</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                 <div class="bg-white p-6 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-2xl">
-                    <svg class="w-12 h-12 mx-auto mb-4 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
-                    <h3 class="font-semibold text-lg mb-2 text-gray-800">Your Laugh</h3>
-                    <p class="text-gray-600">It's the most beautiful music to my ears.</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 max-w-5xl mx-auto">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><svg class="w-20 h-20 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg></div>
+                        <div class="flip-card-back"><h3 class="font-semibold text-lg mb-2 text-gray-800">Your Laugh</h3><p class="text-gray-600 text-sm">It's the most beautiful music to my ears.</p></div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-2xl">
-                    <svg class="w-12 h-12 mx-auto mb-4 text-fuchsia-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
-                    <h3 class="font-semibold text-lg mb-2 text-gray-800">Your Kindness</h3>
-                    <p class="text-gray-600">You have a way of making everyone feel special.</p>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><svg class="w-20 h-20 text-fuchsia-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg></div>
+                        <div class="flip-card-back"><h3 class="font-semibold text-lg mb-2 text-gray-800">Your Kindness</h3><p class="text-gray-600 text-sm">You have a way of making everyone feel special.</p></div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-2xl">
-                    <svg class="w-12 h-12 mx-auto mb-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
-                    <h3 class="font-semibold text-lg mb-2 text-gray-800">The Way You Think</h3>
-                    <p class="text-gray-600">I love getting lost in conversation with you.</p>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><svg class="w-20 h-20 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg></div>
+                        <div class="flip-card-back"><h3 class="font-semibold text-lg mb-2 text-gray-800">The Way You Think</h3><p class="text-gray-600 text-sm">I love getting lost in conversation with you.</p></div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-2xl">
-                    <svg class="w-12 h-12 mx-auto mb-4 text-rose-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
-                    <h3 class="font-semibold text-lg mb-2 text-gray-800">Your Boundless Support</h3>
-                    <p class="text-gray-600">You're my rock and my biggest cheerleader, always.</p>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><svg class="w-20 h-20 text-rose-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg></div>
+                        <div class="flip-card-back"><h3 class="font-semibold text-lg mb-2 text-gray-800">Your Support</h3><p class="text-gray-600 text-sm">You're my rock and my biggest cheerleader, always.</p></div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-2xl">
-                    <svg class="w-12 h-12 mx-auto mb-4 text-violet-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
-                    <h3 class="font-semibold text-lg mb-2 text-gray-800">Our Quiet Moments</h3>
-                    <p class="text-gray-600">Just sitting in comfortable silence with you feels like home.</p>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><svg class="w-20 h-20 text-violet-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg></div>
+                        <div class="flip-card-back"><h3 class="font-semibold text-lg mb-2 text-gray-800">Our Quiet Moments</h3><p class="text-gray-600 text-sm">Just being with you feels like home.</p></div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-2xl">
-                    <svg class="w-12 h-12 mx-auto mb-4 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
-                    <h3 class="font-semibold text-lg mb-2 text-gray-800">The Way Your Eyes Sparkle</h3>
-                    <p class="text-gray-600">When you talk about something you love, you light up the room.</p>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"><svg class="w-20 h-20 text-teal-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg></div>
+                        <div class="flip-card-back"><h3 class="font-semibold text-lg mb-2 text-gray-800">Your Eyes</h3><p class="text-gray-600 text-sm">When you talk about something you love, you light up the room.</p></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -397,7 +437,7 @@
         }
         animateTrail();
 
-        // New Heart on Click/Tap Logic
+        // Heart on Click/Tap Logic
         function createHeartOnClick(e) {
             const heart = document.createElement('div');
             heart.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>`;
@@ -413,6 +453,21 @@
         }
         document.addEventListener('click', createHeartOnClick);
         document.addEventListener('touchstart', createHeartOnClick);
+
+        // Flipping Cards Logic
+        const flipCards = document.querySelectorAll('.flip-card');
+        flipCards.forEach(card => {
+            const handleFlip = (e) => {
+                // Prevent the event from bubbling up to the document click listener for the heart effect
+                e.stopPropagation();
+                card.classList.toggle('flipped');
+            };
+            card.addEventListener('click', handleFlip);
+            card.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                handleFlip(e);
+            });
+        });
 
         // Countdown Timer Logic
         const anniversaryMonth = 11;
