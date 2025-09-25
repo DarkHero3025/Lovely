@@ -95,6 +95,11 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Live header text style */
+        .header-text {
+            transition: transform 0.1s linear;
+        }
+
         .countdown-item {
             display: flex;
             flex-direction: column;
@@ -265,14 +270,16 @@
     </div>
 
     <!-- Hero Section -->
-    <header class="h-screen w-full flex flex-col items-center justify-center text-center p-4 relative z-10 overflow-hidden animated-gradient">
+    <header id="hero-header" class="h-screen w-full flex flex-col items-center justify-center text-center p-4 relative z-10 overflow-hidden animated-gradient">
         <div class="relative z-10">
-            <h1 class="font-playfair text-5xl md:text-8xl font-bold text-rose-800">Basset & Sireen</h1>
-            <p class="mt-4 text-lg md:text-2xl text-rose-700">Our journey began on October 23, 2024</p>
+            <h1 id="hero-title" class="font-playfair text-5xl md:text-8xl font-bold text-rose-800 header-text">Basset & Sireen</h1>
+            <p id="hero-subtitle" class="mt-4 text-lg md:text-2xl text-rose-700 header-text">Our journey began on October 23, 2024</p>
         </div>
     </header>
 
     <main class="container mx-auto px-4 md:px-6 py-16 relative z-10">
+
+    
 
         <!-- Redesigned "Our Promises" Section -->
         <section class="mb-20 reveal">
@@ -458,7 +465,6 @@
         const flipCards = document.querySelectorAll('.flip-card');
         flipCards.forEach(card => {
             const handleFlip = (e) => {
-                // Prevent the event from bubbling up to the document click listener for the heart effect
                 e.stopPropagation();
                 card.classList.toggle('flipped');
             };
@@ -467,6 +473,20 @@
                 e.preventDefault();
                 handleFlip(e);
             });
+        });
+        
+        // Live Header parallax effect
+        const header = document.getElementById('hero-header');
+        const heroTitle = document.getElementById('hero-title');
+        const heroSubtitle = document.getElementById('hero-subtitle');
+        header.addEventListener('mousemove', function(e) {
+            const { clientX, clientY } = e;
+            const { offsetWidth, offsetHeight } = header;
+            const x = (clientX / offsetWidth - 0.5) * 2; // -1 to 1
+            const y = (clientY / offsetHeight - 0.5) * 2; // -1 to 1
+
+            heroTitle.style.transform = `translateX(${x * -10}px) translateY(${y * -5}px)`;
+            heroSubtitle.style.transform = `translateX(${x * 10}px) translateY(${y * 5}px)`;
         });
 
         // Countdown Timer Logic
@@ -505,7 +525,7 @@
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
+                var elementVisible = 100; // Adjusted for better mobile experience
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
