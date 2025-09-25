@@ -102,15 +102,15 @@
         }
         .countdown-number {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: bold;
             line-height: 1;
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background: linear-gradient(145deg, #ec4899, #d946ef);
             box-shadow: 5px 5px 15px rgba(217, 70, 239, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.8);
@@ -128,10 +128,16 @@
             transform: scale(1.1);
         }
         .countdown-label {
-            margin-top: 1rem;
-            font-size: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
             color: #be185d;
             font-weight: 600;
+        }
+        @media (min-width: 768px) {
+            .countdown-label {
+                 margin-top: 1rem;
+                 font-size: 1rem;
+            }
         }
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -152,13 +158,12 @@
             transition: opacity 0.5s ease-out;
         }
 
-        /* Fixed heart on click style */
         .click-heart {
-            position: fixed; /* Changed to fixed to work anywhere on the page */
+            position: fixed;
             color: #ec4899;
             pointer-events: none;
             z-index: 10000;
-            transform: translate(-50%, -50%); /* Center the heart on the cursor */
+            transform: translate(-50%, -50%);
             animation: clickBeatFade 1s ease-out forwards;
         }
 
@@ -177,12 +182,18 @@
             }
         }
         
-        /* New "Our Promises" Section Styles */
         .promise-orb-container {
             position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 1rem;
+            width: 120px;
+            height: 120px;
+            margin: 0.5rem;
+        }
+        @media (min-width: 768px) {
+            .promise-orb-container {
+                width: 150px;
+                height: 150px;
+                margin: 1rem;
+            }
         }
         .promise-orb {
             width: 100%;
@@ -214,8 +225,13 @@
             text-align: center;
             color: white;
             font-family: 'Dancing Script', cursive;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             pointer-events: none;
+        }
+        @media (min-width: 768px) {
+            .promise-text {
+                font-size: 1.5rem;
+            }
         }
         .promise-orb-container:hover .promise-orb {
             transform: scale(1.5);
@@ -236,20 +252,18 @@
     <!-- Hero Section -->
     <header class="h-screen w-full flex flex-col items-center justify-center text-center p-4 relative z-10 overflow-hidden animated-gradient">
         <div class="relative z-10">
-            <!-- Names Updated -->
             <h1 class="font-playfair text-5xl md:text-8xl font-bold text-rose-800">Basset & Sireen</h1>
-            <!-- EDIT YOUR SPECIAL DATE HERE -->
             <p class="mt-4 text-lg md:text-2xl text-rose-700">Our journey began on October 23, 2024</p>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-16 relative z-10">
+    <main class="container mx-auto px-4 md:px-6 py-16 relative z-10">
 
-  
+      
         
         <!-- New "Our Promises" Section -->
         <section class="mb-20 reveal">
-            <h2 class="text-4xl font-playfair text-center font-bold mb-12 gradient-text">Our Promises</h2>
+            <h2 class="text-3xl md:text-4xl font-playfair text-center font-bold mb-12 gradient-text">Our Promises</h2>
             <div class="flex flex-col md:flex-row justify-center items-center">
                 <div class="promise-orb-container">
                     <div class="promise-orb"></div>
@@ -268,7 +282,7 @@
 
         <!-- Reasons I Love You Section -->
         <section class="mb-20 reveal">
-            <h2 class="text-4xl font-playfair text-center font-bold mb-12 gradient-text">Reasons I Love You</h2>
+            <h2 class="text-3xl md:text-4xl font-playfair text-center font-bold mb-12 gradient-text">Reasons I Love You</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
                  <div class="bg-white p-6 rounded-lg shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-2xl">
                     <svg class="w-12 h-12 mx-auto mb-4 text-pink-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
@@ -305,7 +319,7 @@
 
         <!-- A Special Message from Sireen -->
         <section class="mb-20 reveal">
-             <h2 class="text-4xl font-playfair text-center font-bold mb-12 gradient-text">From Her Heart</h2>
+             <h2 class="text-3xl md:text-4xl font-playfair text-center font-bold mb-12 gradient-text">From Her Heart</h2>
              <div class="max-w-3xl mx-auto bg-white/50 backdrop-blur-sm p-8 rounded-lg shadow-xl text-center">
                  <p class="font-dancing text-3xl text-rose-800 leading-relaxed">
                     "I love you for being you, not for any particular reason. Your presence with me is a true gift... and you're my cute peach."
@@ -316,8 +330,8 @@
 
         <!-- New Countdown Section -->
         <section class="mb-20 reveal">
-            <h2 class="text-4xl font-playfair text-center font-bold mb-12 gradient-text">Counting Down to Our Day</h2>
-            <div id="countdown-container-new" class="flex justify-center items-center gap-4 md:gap-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-playfair text-center font-bold mb-12 gradient-text">Counting Down to Our Day</h2>
+            <div id="countdown-container-new" class="flex justify-center items-start gap-2 md:gap-8 text-center">
                 <div class="countdown-item"><div id="days" class="countdown-number">00</div><div class="countdown-label">Days</div></div>
                 <div class="countdown-item"><div id="hours" class="countdown-number">00</div><div class="countdown-label">Hours</div></div>
                 <div class="countdown-item"><div id="minutes" class="countdown-number">00</div><div class="countdown-label">Minutes</div></div>
@@ -330,7 +344,7 @@
 
         <!-- Special Message Section -->
         <section class="reveal">
-            <h2 class="text-4xl font-playfair text-center font-bold mb-12 gradient-text">A Note For You</h2>
+            <h2 class="text-3xl md:text-4xl font-playfair text-center font-bold mb-12 gradient-text">A Note For You</h2>
             <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-2xl relative">
                 <div class="absolute top-4 right-4 text-pink-400 heart-beat">
                     <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
